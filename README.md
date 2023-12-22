@@ -1,0 +1,1 @@
+# CRM App | React - TypeScript - Zustand - React Router DOM - TailwindCSS - Vite
