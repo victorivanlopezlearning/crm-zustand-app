@@ -12,7 +12,7 @@ export const BearPage = () => {
         <WhiteCard centered>
           <h2>Osos Negros</h2>
 
-          <div className="flex flex-col md:flex-row">
+          <div className="flex flex-col md:flex-row mt-4">
             <button> +1</button>
             <span className="text-3xl mx-2 lg:mx-10"> 0 </span>
             <button>-1</button>
@@ -23,7 +23,7 @@ export const BearPage = () => {
         <WhiteCard centered>
           <h2>Osos Polares</h2>
 
-          <div className="flex flex-col md:flex-row">
+          <div className="flex flex-col md:flex-row mt-4">
             <button> +1</button>
             <span className="text-3xl mx-2 lg:mx-10"> 0 </span>
             <button>-1</button>
@@ -35,7 +35,7 @@ export const BearPage = () => {
         <WhiteCard centered>
           <h2>Osos Pandas</h2>
 
-          <div className="flex flex-col md:flex-row">
+          <div className="flex flex-col md:flex-row mt-4">
             <button> +1</button>
             <span className="text-3xl mx-2 lg:mx-10"> 0 </span>
             <button>-1</button>
