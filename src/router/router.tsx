@@ -1,11 +1,17 @@
 import { createBrowserRouter } from 'react-router-dom';
-
 import { Root } from '../Root';
 import { AuthLayout, DashboardLayout } from '../layouts';
-import { BearPage, Dashboard, JiraPage, LoginPage, PersonPage, WeddingInvitationPage } from '../pages';
+import {
+  BearPage,
+  Dashboard,
+  JiraPage,
+  LoginPage,
+  PersonPage,
+  WeddingInvitationPage
+} from '../pages';
 
 
-export const router = createBrowserRouter( [
+export const router = createBrowserRouter([
   {
     path: '/',
     element: <Root />,
@@ -16,7 +22,7 @@ export const router = createBrowserRouter( [
         element: <DashboardLayout />,
         children: [
           {
-            path: '',
+            index: true,
             element: <Dashboard />
           },
           {
@@ -54,4 +60,4 @@ export const router = createBrowserRouter( [
 
     ],
   },
-] );
+]);
