@@ -1,4 +1,4 @@
-import { IoCheckmarkCircleOutline, IoEllipsisHorizontalOutline, IoReorderTwoOutline } from 'react-icons/io5';
+import { IoCheckmarkCircleOutline, IoEllipsisHorizontalOutline } from 'react-icons/io5';
 import { Task, TaskStatus } from '../../interfaces';
 import { SingleTask } from './SingleTask';
 
@@ -11,7 +11,7 @@ interface Props {
 
 export const JiraTasks = ({ title, tasks, value }: Props) => {
   return (
-    <div className="!text-black relative flex flex-col rounded-[20px]  bg-white bg-clip-border shadow-3xl shadow-shadow-500  w-full !p-4 3xl:p-![18px]">
+    <div className="!text-black relative flex flex-col rounded-[20px] bg-white bg-clip-border shadow-3xl shadow-shadow-500  w-full !p-4 3xl:p-![18px]">
 
       {/* Task Header */}
       <div className="relative flex flex-row justify-between">
