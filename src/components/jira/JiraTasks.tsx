@@ -1,5 +1,5 @@
 import { DragEvent, useState } from 'react';
-import { IoCheckmarkCircleOutline, IoEllipsisHorizontalOutline } from 'react-icons/io5';
+import { IoAddOutline, IoCheckmarkCircleOutline } from 'react-icons/io5';
 import classNames from 'classnames';
 import { Task, TaskStatus } from '../../interfaces';
 import { SingleTask } from './SingleTask';
@@ -60,7 +60,7 @@ export const JiraTasks = ({ title, tasks, value }: Props) => {
         </div>
 
         <button>
-          <IoEllipsisHorizontalOutline />
+          <IoAddOutline />
         </button>
 
       </div>
