@@ -16,7 +16,12 @@ export const JiraTasks = ({ title, tasks, value }: Props) => {
 
   const isDragging = useTaksStore((state) => !!(state.draggingTaskId));
   const onTaskDrop = useTaksStore((state) => state.onTaskDrop);
+  const addTask = useTaksStore((state) => state.addTask);
   const [onDragOver, setOnDragOver] = useState(false);
+
+  const handleAddTask = () => {
+    addTask('Nuevo titulo', value);
+  }
 
   const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -59,7 +64,9 @@ export const JiraTasks = ({ title, tasks, value }: Props) => {
           <h4 className="ml-4 text-xl font-bold text-navy-700">{title}</h4>
         </div>
 
-        <button>
+        <button
+          onClick={handleAddTask}
+        >
           <IoAddOutline />
         </button>
 
