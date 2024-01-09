@@ -1,10 +1,8 @@
-import { DragEvent, useState } from 'react';
 import { IoAddOutline, IoCheckmarkCircleOutline } from 'react-icons/io5';
 import classNames from 'classnames';
-import Swal from 'sweetalert2';
 import { Task, TaskStatus } from '../../interfaces';
 import { SingleTask } from './SingleTask';
-import { useTaksStore } from '../../stores';
+import { useTasks } from '../../hooks';
 
 interface Props {
   title: string;
@@ -15,46 +13,14 @@ interface Props {
 
 export const JiraTasks = ({ title, tasks, status }: Props) => {
 
-  const isDragging = useTaksStore((state) => !!(state.draggingTaskId));
-  const onTaskDrop = useTaksStore((state) => state.onTaskDrop);
-  const addTask = useTaksStore((state) => state.addTask);
-  const [onDragOver, setOnDragOver] = useState(false);
-
-  const handleAddTask = async () => {
-
-    const { isConfirmed, value } = await Swal.fire({
-      title: 'Nueva tarea',
-      input: 'text',
-      inputPlaceholder: 'Ingrese el nombre de la tarea',
-      confirmButtonText: 'Crear tarea',
-      showCancelButton: true,
-      cancelButtonText: 'Cancelar',
-      inputValidator: (value) => {
-        if (!value) {
-          return 'Debe de ingresar un nombre para la tarea.'
-        }
-      }
-    });
-
-    if (isConfirmed) {
-      addTask(value, status);
-    }
-
-  }
-
-  const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    setOnDragOver(true);
-  }
-  const handleDragLeave = (event: DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    setOnDragOver(false);
-  }
-  const handleDrop = (event: DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    setOnDragOver(false);
-    onTaskDrop(status);
-  }
+  const { 
+    isDragging,
+    handleAddTask, 
+    handleDragLeave, 
+    handleDragOver, 
+    handleDrop, 
+    onDragOver,
+  } = useTasks({ status });
 
   return (
     <div
@@ -68,10 +34,8 @@ export const JiraTasks = ({ title, tasks, status }: Props) => {
         })
       }
     >
-
       {/* Task Header */}
       <div className="relative flex flex-row justify-between">
-
         <div className="flex items-center justify-center">
 
           <div className="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-100">
@@ -88,7 +52,6 @@ export const JiraTasks = ({ title, tasks, status }: Props) => {
         >
           <IoAddOutline />
         </button>
-
       </div>
 
       {/* Task Items */}
