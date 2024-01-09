@@ -2,6 +2,7 @@ import { StateCreator, create } from 'zustand';
 import { v4 as uuidv4 } from 'uuid';
 import { devtools } from 'zustand/middleware';
 import type { Task, TaskStatus } from '../../interfaces';
+import { immer } from 'zustand/middleware/immer';
 
 interface TaskState {
   tasks: Record<string, Task>; // {[key: string]: Task}
@@ -16,14 +17,9 @@ interface TaskState {
   onTaskDrop: (status: TaskStatus) => void;
 }
 
-const storeApi: StateCreator<TaskState> = (set, get) => ({
+const storeApi: StateCreator<TaskState, [["zustand/immer", never]]> = (set, get) => ({
   draggingTaskId: undefined,
-  tasks: {
-    'ABC-1': { id: 'ABC-1', title: 'Task 1', status: 'open' },
-    'ABC-2': { id: 'ABC-2', title: 'Task 2', status: 'open' },
-    'ABC-3': { id: 'ABC-3', title: 'Task 3', status: 'in-progress' },
-    'ABC-4': { id: 'ABC-4', title: 'Task 4', status: 'open' },
-  },
+  tasks: {},
 
   getTaskByStatus: (status: TaskStatus) => {
     return Object.values(get().tasks).filter(task => task.status === status);
@@ -33,12 +29,18 @@ const storeApi: StateCreator<TaskState> = (set, get) => ({
 
     const newTask = { id: uuidv4(), title, status };
 
-    set((state) => ({
-      tasks: {
-        ...state.tasks,
-        [newTask.id]: newTask,
-      }
-    }));
+    //? Con Middleware Immer
+    set(state => {
+      state.tasks[newTask.id] = newTask;
+    });
+
+    //? Forma nativa de Zustand
+    // set((state) => ({
+    //   tasks: {
+    //     ...state.tasks,
+    //     [newTask.id]: newTask,
+    //   }
+    // }));
   },
 
   setDraggingTaskId: (taskId: string) => set({ draggingTaskId: taskId }),
@@ -46,15 +48,21 @@ const storeApi: StateCreator<TaskState> = (set, get) => ({
   removeDraggingTaskId: () => set({ draggingTaskId: undefined }),
 
   changeTaskStatus: (taskId: string, status: TaskStatus) => {
-    const task = get().tasks[taskId];
-    task.status = status;
+    // //? Con Middleware Immer
+    set(state => {
+      state.tasks[taskId].status = status;
+    })
 
-    set((state) => ({
-      tasks: {
-        ...state.tasks,
-        [taskId]: task,
-      }
-    }))
+    // //? Forma nativa de Zustand
+    // const task = get().tasks[taskId];
+    // task.status = status;
+
+    // set((state) => ({
+    //   tasks: {
+    //     ...state.tasks,
+    //     [taskId]: task,
+    //   }
+    // }));
   },
 
   onTaskDrop: (status: TaskStatus) => {
@@ -68,6 +76,6 @@ const storeApi: StateCreator<TaskState> = (set, get) => ({
 
 export const useTaksStore = create<TaskState>()(
   devtools(
-    storeApi
+    immer(storeApi)
   )
 );
