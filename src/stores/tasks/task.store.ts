@@ -19,7 +19,7 @@ interface TaskState {
   onTaskDrop: (status: TaskStatus) => void;
 }
 
-const storeApi: StateCreator<TaskState, [["zustand/immer", never]]> = (set, get) => ({
+const storeApi: StateCreator<TaskState, [["zustand/devtools", never], ["zustand/persist", unknown], ["zustand/immer", never]]> = (set, get) => ({
   draggingTaskId: undefined,
   tasks: {},
 
@@ -38,7 +38,7 @@ const storeApi: StateCreator<TaskState, [["zustand/immer", never]]> = (set, get)
     //? Con Middleware Immer
     set(state => {
       state.tasks[newTask.id] = newTask;
-    });
+    }, false, 'addTask');
 
     //? Forma nativa de Zustand
     // set((state) => ({
@@ -49,15 +49,15 @@ const storeApi: StateCreator<TaskState, [["zustand/immer", never]]> = (set, get)
     // }));
   },
 
-  setDraggingTaskId: (taskId: string) => set({ draggingTaskId: taskId }),
+  setDraggingTaskId: (taskId: string) => set({ draggingTaskId: taskId }, false, 'setDraggingTaskId'),
 
-  removeDraggingTaskId: () => set({ draggingTaskId: undefined }),
+  removeDraggingTaskId: () => set({ draggingTaskId: undefined }, false, 'removeDraggingTaskId'),
 
   changeTaskStatus: (taskId: string, status: TaskStatus) => {
     // //? Con Middleware Immer
     set(state => {
       state.tasks[taskId].status = status;
-    })
+    }, false, 'changeTaskStatus');
 
     // //? Forma nativa de Zustand
     // const task = get().tasks[taskId];
