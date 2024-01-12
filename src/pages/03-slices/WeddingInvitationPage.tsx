@@ -13,6 +13,11 @@ export const WeddingInvitationPage = () => {
   const guestCount = useWeddingBoundStore((state) => state.guestCount);
   const setGuestCount = useWeddingBoundStore((state) => state.setGuestCount);
 
+  const eventDate = useWeddingBoundStore((state) => state.eventYYYYMMDD());
+  const eventTime = useWeddingBoundStore((state) => state.eventHHMM());
+  const setEventDate = useWeddingBoundStore((state) => state.setEventDate);
+  const setEventTime = useWeddingBoundStore((state) => state.setEventTime);
+  
   return (
     <>
       <h1>Invitación de Boda</h1>
@@ -88,6 +93,8 @@ export const WeddingInvitationPage = () => {
                     type="date"
                     name="eventDate"
                     id="eventDate"
+                    value={eventDate}
+                    onChange={(e) => setEventDate(e.target.value)}
                   />
                 </div>
               </div>
@@ -102,6 +109,8 @@ export const WeddingInvitationPage = () => {
                     type="time"
                     name="eventTime"
                     id="eventTime"
+                    value={eventTime}
+                    onChange={(e) => setEventTime(e.target.value)}
                   />
                 </div>
               </div>
