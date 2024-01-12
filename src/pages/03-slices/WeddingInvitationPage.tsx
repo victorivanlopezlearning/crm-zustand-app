@@ -10,6 +10,9 @@ export const WeddingInvitationPage = () => {
   const setFirstName = useWeddingBoundStore((state) => state.setFirstName);
   const setLastName = useWeddingBoundStore((state) => state.setLastName);
 
+  const guestCount = useWeddingBoundStore((state) => state.guestCount);
+  const setGuestCount = useWeddingBoundStore((state) => state.setGuestCount);
+
   return (
     <>
       <h1>Invitación de Boda</h1>
@@ -68,6 +71,8 @@ export const WeddingInvitationPage = () => {
                 placeholder="5"
                 min="0"
                 className="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                value={guestCount}
+                onChange={(e) => setGuestCount(Number(e.target.value))}
               />
             </div>
 
