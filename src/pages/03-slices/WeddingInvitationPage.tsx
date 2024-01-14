@@ -1,3 +1,4 @@
+import { FormEvent } from 'react';
 import { WhiteCard } from '../../components';
 import { useWeddingBoundStore } from '../../stores';
 
@@ -13,6 +14,7 @@ export const WeddingInvitationPage = () => {
   const guestCount = useWeddingBoundStore((state) => state.guestCount);
   const setGuestCount = useWeddingBoundStore((state) => state.setGuestCount);
 
+  const eventFullDate = useWeddingBoundStore((state) => state.eventDate);
   const eventDate = useWeddingBoundStore((state) => state.eventYYYYMMDD());
   const eventTime = useWeddingBoundStore((state) => state.eventHHMM());
   const setEventDate = useWeddingBoundStore((state) => state.setEventDate);
@@ -20,7 +22,12 @@ export const WeddingInvitationPage = () => {
 
   const isConfirmed = useWeddingBoundStore((state) => state.isConfirmed);
   const setIsConfirmed = useWeddingBoundStore((state) => state.setIsConfirmed);
-  
+
+  const onFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log({ firstName, lastName, guestCount, eventFullDate, isConfirmed });
+  }
+
   return (
     <>
       <h1>Invitación de Boda</h1>
@@ -29,7 +36,9 @@ export const WeddingInvitationPage = () => {
 
       <WhiteCard className="flex items-center justify-center p-12">
         <div className="mx-auto w-full max-w-[550px]">
-          <form>
+          <form
+            onSubmit={onFormSubmit}
+          >
             <div className="-mx-3 flex flex-wrap">
               <div className="w-full px-3 sm:w-1/2">
                 <div className="mb-5">
