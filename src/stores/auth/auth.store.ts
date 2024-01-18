@@ -1,4 +1,5 @@
 import { StateCreator, create } from 'zustand';
+import { devtools } from 'zustand/middleware';
 import type { User } from '../../interfaces';
 import { AuthService } from '../../services/auth.service';
 
@@ -28,5 +29,7 @@ const storeApi: StateCreator<AuthState> = (set) => ({
 });
 
 export const useAuthStore = create<AuthState>()(
-  storeApi
+  devtools(
+    storeApi
+  )
 );
