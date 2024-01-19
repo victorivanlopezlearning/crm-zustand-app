@@ -8,8 +8,9 @@ export interface AuthState {
   token?: string;
   user?: User;
 
-  loginUser: (email: string, password: string) => Promise<void>;
   checkAuthStatus: () => Promise<void>;
+  loginUser: (email: string, password: string) => Promise<void>;
+  logoutUser: () => void;
 }
 
 export type AuthStatus = 'authorized' | 'unauthorized' | 'pending';
@@ -38,6 +39,8 @@ const storeApi: StateCreator<AuthState> = (set) => ({
       throw new Error('UnAuthorized');
     }
   },
+
+  logoutUser: () => set({ status: 'unauthorized', token: undefined, user: undefined })
 });
 
 export const useAuthStore = create<AuthState>()(
