@@ -1,11 +1,12 @@
 import {
   IoAccessibilityOutline,
   IoHeartOutline,
+  IoInformationOutline,
   IoListOutline,
   IoLockClosedOutline,
   IoPawOutline
 } from 'react-icons/io5';
-import { WhiteCard } from '../../components';
+import { RequestInfo, WhiteCard } from '../../components';
 import { useBearStore, usePersonStore, useTaksStore } from '../../stores';
 
 export const Dashboard = () => {
@@ -56,10 +57,11 @@ export const Dashboard = () => {
           <p>Información</p>
         </WhiteCard>
 
-
-
+        <WhiteCard centered className='col-span-3'>
+          <IoInformationOutline size={50} className="text-indigo-600" />
+          <RequestInfo />
+        </WhiteCard>
       </div>
-
     </>
   );
 };
