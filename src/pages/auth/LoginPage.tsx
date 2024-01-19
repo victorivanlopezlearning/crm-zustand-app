@@ -1,33 +1,34 @@
 import { FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../stores';
 
 export const LoginPage = () => {
 
+  const navigate = useNavigate();
+
   const loginUser = useAuthStore((state) => state.loginUser);
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const onSubmitForm = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // const { username, password, remember } = event.target as HTMLFormElement;
-    const { username, password, remember } = event.target as typeof event.target & {
+    const { username, password } = event.target as typeof event.target & {
       username: { value: string };
       password: { value: string };
-      remember: { checked: boolean }
     };
-    console.log(username.value, password.value, remember.checked);
 
-    loginUser(username.value, password.value);
-
-    // username.value = '';
-    // password.value = '';
-    // remember.checked = false;
+    try {
+      await loginUser(username.value, password.value);
+      navigate('/dashboard');
+    } catch (error) {
+      console.error('Error al iniciar sesión', error);
+    }
   }
-
 
   return (
     <>
       <h1 className="text-2xl font-semibold mb-4">Inicia sesión en tu cuenta</h1>
 
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmitForm}>
 
         <div className="mb-4">
           <label className="block text-gray-600">Email</label>
